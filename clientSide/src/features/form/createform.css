@@ -35,7 +35,7 @@ label {
 
 button {
     cursor: pointer;
-    background-color: #762cdc;
+    background-color: #9e6be5;
     color: white;
     
 }
@@ -45,7 +45,7 @@ button {
 }
 
 button:hover {
-    background-color: #3700b3;
+    background-color: #754dd1;
 }
 
 .buttonDel{

@@ -11,6 +11,7 @@ import { RootState } from "../../app/store"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import Landing from "./Landing"
 
 
 
@@ -80,6 +81,7 @@ const CreateForm = () => {
 
     return (
         <>
+            <Landing />
             <div style={{ display: "flex", justifyContent: 'center' }}>
 
                 <h1>Create Form</h1>

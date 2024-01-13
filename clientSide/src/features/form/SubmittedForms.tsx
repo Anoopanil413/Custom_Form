@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { fetchForms } from "./formSlice";
 import { Link } from 'react-router-dom';
+import Landing from "./Landing";
 
 
 const SubmittedForms = () => {
@@ -38,6 +39,7 @@ const SubmittedForms = () => {
     return (
         <>
             <div>
+                <Landing />
                 <h1>Forms</h1>
                 {content}
             </div>

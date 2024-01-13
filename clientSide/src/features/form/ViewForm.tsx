@@ -7,6 +7,7 @@ import DropDownField from "../../components/DropDownField";
 import CheckBoxField from "../../components/CheckBoxField";
 import axiosInstance from '../../api/axiosInstance'
 import './viewForm.css'
+import Landing from "./Landing";
 
 
 
@@ -73,16 +74,19 @@ const ViewForm = () => {
     };
 
     return (
-        <div>{submissionStatus === 'Form submitted successfully' ? (<div style={{ display: "flex", justifyContent: "center" }}><h3>{submissionStatus}</h3></div>) :
-            (<div>
-                <h1 className="title">{form.title}</h1>
-                <form onSubmit={handleSubmit}>
-                    {form.fields.map(renderField)}
-                    <button type="submit">Submit</button>
-                </form>
-            </div>)
-        }
-        </div>
+        <>
+            <Landing />
+            <div>{submissionStatus === 'Form submitted successfully' ? (<div style={{ display: "flex", justifyContent: "center" }}><h3>{submissionStatus}</h3></div>) :
+                (<div>
+                    <h1 className="title">{form.title}</h1>
+                    <form onSubmit={handleSubmit}>
+                        {form.fields.map(renderField)}
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>)
+            }
+            </div>
+        </>
     );
 }
 
