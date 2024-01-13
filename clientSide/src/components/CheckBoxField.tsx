@@ -7,7 +7,7 @@ interface FieldProps {
         required: boolean;
         options?: string[];
     };
-    onFieldChange: (name: string, value: string) => void;
+    onFieldChange?: (name: string, value: string) => void;
 
 }
 const CheckBoxField = ({ field, onFieldChange }: FieldProps) => {
@@ -19,7 +19,7 @@ const CheckBoxField = ({ field, onFieldChange }: FieldProps) => {
                 <label>{field.name}</label>
                 {field.options && field.options.map(option => (
                     <div key={option}>
-                        <input type="checkbox" name={field.name} value={option} required={field.required} onChange={(e) => onFieldChange(field.name, e.target.value)} />
+                        <input type="checkbox" name={field.name} value={option} required={field.required} onChange={(e) => onFieldChange && onFieldChange(field.name, e.target.value)} />
                         <label>{option}</label>
                     </div>
                 ))}

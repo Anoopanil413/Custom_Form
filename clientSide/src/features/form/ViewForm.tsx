@@ -20,30 +20,32 @@ const ViewForm = () => {
     const { formId } = useParams();
     const [form, setForm] = useState({ title: '', fields: [] as Field[] });
     const [formResponses, setFormResponses] = useState({});
+    const [submissionStatus, setSubmissionStatus] = useState('');
 
 
     const handleFieldChange = (name: string, value: string) => {
         setFormResponses({ ...formResponses, [name]: value });
-      };
-      
+    };
 
-    const handleSubmit = async (event) => {
+
+    const handleSubmit = async (event: any) => {
         event.preventDefault();
-      
+
         try {
-          const response = await axiosInstance.post(`/api/forms/${formId}/submit`, formResponses);
-      
-          if (response.status === 200) {
-            // Handle successful form submission here
-            console.log('Form submitted successfully');
-          } else {
-            // Handle errors here
-            console.log('Error submitting form');
-          }
+            const response = await axiosInstance.post(`/api/forms/${formId}/submit`, formResponses);
+
+            if (response.status === 200) {
+                console.log('Form submitted successfully');
+                setSubmissionStatus('Form submitted successfully');
+            } else {
+                console.log('Error submitting form');
+                setSubmissionStatus('Error submitting form');
+            }
         } catch (error) {
-          console.error('Error submitting form', error);
+            console.error('Error submitting form', error);
+            setSubmissionStatus('Error submitting form');
         }
-      };
+    };
 
     useEffect(() => {
         const fetchForm = async () => {
@@ -57,11 +59,11 @@ const ViewForm = () => {
     const renderField = (field: Field, index: number) => {
         switch (field.type) {
             case 'text':
-                return <TextField key={index} field={field} onFieldChange={handleFieldChange}  />;
+                return <TextField key={index} field={field} onFieldChange={handleFieldChange} />;
             case 'radio':
                 return <RadioButtonField key={index} field={field} onFieldChange={handleFieldChange} />;
             case 'dropdown':
-                return <DropDownField key={index} field={field} onFieldChange={handleFieldChange}  />;
+                return <DropDownField key={index} field={field} onFieldChange={handleFieldChange} />;
             case 'checkbox':
                 return <CheckBoxField key={index} field={field} onFieldChange={handleFieldChange} />;
             default:
@@ -70,12 +72,15 @@ const ViewForm = () => {
     };
 
     return (
-        <div>
-            <h1>{form.title}</h1>
-            <form onSubmit={handleSubmit}>
-                {form.fields.map(renderField)}
-                <button type="submit">Submit</button>
-            </form>
+        <div>{submissionStatus === 'Form submitted successfully' ? (<h3>{submissionStatus}</h3>) :
+            (<div>
+                <h1>{form.title}</h1>
+                <form onSubmit={handleSubmit}>
+                    {form.fields.map(renderField)}
+                    <button type="submit">Submit</button>
+                </form>
+            </div>)
+        }
         </div>
     );
 }
