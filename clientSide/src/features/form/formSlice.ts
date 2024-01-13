@@ -17,7 +17,7 @@ const initialState: FormState = {
 export const fetchForms = createAsyncThunk('forms/fetchForms', async () => {
     const response = await axiosInstance.get('/api/forms');
     console.log("heyyyyyyy", response)
-    const data = await response.json();
+    const data = await response?.data;
     return data;
 });
 

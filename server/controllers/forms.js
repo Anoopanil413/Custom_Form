@@ -18,11 +18,11 @@ const validateSubmission = require('../helpers/validateForm')
 
   }
 
-  exports.getFormById = (req, res) => {
-    Form.findById(req.params.id, (err, form) => {
-      if (err) return res.status(500).send(err);
-      return res.status(200).send(form);
-    });
+  exports.getFormById = async(req, res) => {
+
+    const form = await Form.findById(req.params.id);
+    return res.status(200).send(form);
+
   }
 
 
