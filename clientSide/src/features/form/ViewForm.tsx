@@ -19,6 +19,31 @@ interface Field {
 const ViewForm = () => {
     const { formId } = useParams();
     const [form, setForm] = useState({ title: '', fields: [] as Field[] });
+    const [formResponses, setFormResponses] = useState({});
+
+
+    const handleFieldChange = (name: string, value: string) => {
+        setFormResponses({ ...formResponses, [name]: value });
+      };
+      
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+      
+        try {
+          const response = await axiosInstance.post(`/api/forms/${formId}/submit`, formResponses);
+      
+          if (response.status === 200) {
+            // Handle successful form submission here
+            console.log('Form submitted successfully');
+          } else {
+            // Handle errors here
+            console.log('Error submitting form');
+          }
+        } catch (error) {
+          console.error('Error submitting form', error);
+        }
+      };
 
     useEffect(() => {
         const fetchForm = async () => {
@@ -32,13 +57,13 @@ const ViewForm = () => {
     const renderField = (field: Field, index: number) => {
         switch (field.type) {
             case 'text':
-                return <TextField key={index} field={field} />;
+                return <TextField key={index} field={field} onFieldChange={handleFieldChange}  />;
             case 'radio':
-                return <RadioButtonField key={index} field={field} />;
+                return <RadioButtonField key={index} field={field} onFieldChange={handleFieldChange} />;
             case 'dropdown':
-                return <DropDownField key={index} field={field} />;
+                return <DropDownField key={index} field={field} onFieldChange={handleFieldChange}  />;
             case 'checkbox':
-                return <CheckBoxField key={index} field={field} />;
+                return <CheckBoxField key={index} field={field} onFieldChange={handleFieldChange} />;
             default:
                 return null;
         }
@@ -47,7 +72,10 @@ const ViewForm = () => {
     return (
         <div>
             <h1>{form.title}</h1>
-            {form.fields.map(renderField)}
+            <form onSubmit={handleSubmit}>
+                {form.fields.map(renderField)}
+                <button type="submit">Submit</button>
+            </form>
         </div>
     );
 }
