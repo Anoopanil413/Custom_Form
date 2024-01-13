@@ -73,7 +73,7 @@ const ViewForm = () => {
     };
 
     return (
-        <div>{submissionStatus === 'Form submitted successfully' ? (<h3>{submissionStatus}</h3>) :
+        <div>{submissionStatus === 'Form submitted successfully' ? (<div style={{ display: "flex", justifyContent: "center" }}><h3>{submissionStatus}</h3></div>) :
             (<div>
                 <h1 className="title">{form.title}</h1>
                 <form onSubmit={handleSubmit}>
