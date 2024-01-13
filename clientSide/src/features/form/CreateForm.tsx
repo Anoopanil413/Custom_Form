@@ -9,6 +9,10 @@ import { createForm } from "./formSlice"
 import { useSelector } from "react-redux"
 import { RootState } from "../../app/store"
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+
+
 
 
 interface Field {
@@ -31,7 +35,10 @@ const CreateForm = () => {
 
     const addField = () => {
         const newField = { ...field };
-        setForm({ ...form, fields: [...form.fields, newField] });
+        if (newField.name && newField.type) {
+
+            setForm({ ...form, fields: [...form.fields, newField] });
+        }
         setField({ name: '', type: '', required: false, options: [] as string[] });
     };
 
@@ -89,7 +96,11 @@ const CreateForm = () => {
                     {form.fields.map((field, index) => (
                         <div key={index}>
                             {renderField(field, index)}
-                            <button onClick={() => removeField(index)}>Remove</button>
+                            <div className="buttonDel">
+                                <button className="delBut" onClick={() => removeField(index)}>            <FontAwesomeIcon icon={faTrash} />
+                                </button>
+                            </div>
+
                         </div>
                     ))}
                     {formStatus === 'succeeded' && <div>Form saved successfully!</div>}

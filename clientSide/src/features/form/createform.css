@@ -35,10 +35,21 @@ label {
 
 button {
     cursor: pointer;
-    background-color: #6200ee;
+    background-color: #762cdc;
     color: white;
+    
+}
+.delBut{
+    width: 2.5rem;
+
 }
 
 button:hover {
     background-color: #3700b3;
+}
+
+.buttonDel{
+    display: flex;
+    justify-content: end;
+    width: auto;
 }
