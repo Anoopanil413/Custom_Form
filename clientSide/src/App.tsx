@@ -1,4 +1,4 @@
-import { Route, Routes, Switch } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import './App.css'
 import CreateForm from './features/form/CreateForm'
 import SubmittedForms from './features/form/SubmittedForms'
@@ -8,12 +8,11 @@ function App() {
 
   return (
     <>
-      {/* <CreateForm /> */}
-      {/* <SubmittedForms /> */}
       <Routes>
 
         <Route path="/forms/:formId" element={<ViewForm />} />
         <Route path="/viewForms" element={<SubmittedForms />} />
+        <Route path='/createForm' element={<CreateForm />} />
 
       </Routes>
 
