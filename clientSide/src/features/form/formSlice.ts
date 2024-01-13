@@ -23,15 +23,21 @@ export const fetchForms = createAsyncThunk('forms/fetchForms', async () => {
 
 export const submitForm = createAsyncThunk('forms/submitForm', async (formData: any) => {
     const response = await axiosInstance.post('/api/forms/submit', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
     });
     const data = await response.json();
     return data;
-  });
+});
+export const createForm = createAsyncThunk('forms/createForm', async (formStructure: any) => {
+    console.log("sumiting form", formStructure)
+    const response = await axiosInstance.post('/api/forms', formStructure);
+    return response.data;
+});
+
 
 const formSlice = createSlice({
     name: 'forms',
@@ -64,15 +70,26 @@ const formSlice = createSlice({
             })
             .addCase(submitForm.pending, (state) => {
                 state.status = 'loading';
-              })
-              .addCase(submitForm.fulfilled, (state, action: PayloadAction<any>) => {
+            })
+            .addCase(submitForm.fulfilled, (state, action: PayloadAction<any>) => {
                 state.status = 'succeeded';
                 state.forms = action.payload
-              })
-              .addCase(submitForm.rejected, (state, action) => {
+            })
+            .addCase(submitForm.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message;
-              });
+            })
+            .addCase(createForm.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(createForm.fulfilled, (state, action: PayloadAction<any>) => {
+                state.status = 'succeeded';
+                state.forms = action.payload;
+            })
+            .addCase(createForm.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message;
+            });
 
     }
 });

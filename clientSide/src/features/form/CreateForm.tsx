@@ -1,9 +1,13 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import TextField from "../../components/TextField"
 import RadioButtonField from "../../components/RadioButtonField"
 import DropDownField from "../../components/DropDownField"
 import CheckBoxField from "../../components/CheckBoxField"
 import './createform.css'
+import { useAppDispatch } from "../../app/hooks"
+import { createForm } from "./formSlice"
+import { useSelector } from "react-redux"
+import { RootState } from "../../app/store"
 
 
 
@@ -17,7 +21,12 @@ interface Field {
 const CreateForm = () => {
     const [form, setForm] = useState({ title: '', fields: [] as Field[] })
     const [field, setField] = useState({ name: '', type: '', required: false, options: [] as string[] })
+
     const [option, setOption] = useState('');
+
+    const dispatch = useAppDispatch();
+    const formStatus = useSelector((state: RootState) => state.form.status);
+    const formError = useSelector((state: RootState) => state.form.error);
 
 
     const addField = () => {
@@ -52,6 +61,11 @@ const CreateForm = () => {
                 return null;
         }
     };
+    useEffect(() => {
+        if (formStatus === 'succeeded') {
+            setForm({ title: '', fields: [] as Field[] });
+        }
+    }, [formStatus]);
 
 
     return (
@@ -70,6 +84,10 @@ const CreateForm = () => {
                             <button onClick={() => removeField(index)}>Remove</button>
                         </div>
                     ))}
+                    {formStatus === 'succeeded' && <div>Form saved successfully!</div>}
+                    {formStatus === 'failed' && <div>Error saving form: {formError}</div>}
+                    <button onClick={() => dispatch(createForm(form))}>Save Form</button>
+
                 </div>
                 <div className="formEditor">
                     <input

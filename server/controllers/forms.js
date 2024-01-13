@@ -3,6 +3,7 @@ const Submission = require('../Models/FormSubmission')
 const validateSubmission = require('../helpers/validateForm')
 
   exports.createForm = async (req, res) => {
+    console.log("helooooo",req.body)
     const form = new Form(req.body);
     await form.save();
     return res.status(200).json(form);
