@@ -6,6 +6,7 @@ import RadioButtonField from "../../components/RadioButtonField";
 import DropDownField from "../../components/DropDownField";
 import CheckBoxField from "../../components/CheckBoxField";
 import axiosInstance from '../../api/axiosInstance'
+import './viewForm.css'
 
 
 
@@ -74,7 +75,7 @@ const ViewForm = () => {
     return (
         <div>{submissionStatus === 'Form submitted successfully' ? (<h3>{submissionStatus}</h3>) :
             (<div>
-                <h1>{form.title}</h1>
+                <h1 className="title">{form.title}</h1>
                 <form onSubmit={handleSubmit}>
                     {form.fields.map(renderField)}
                     <button type="submit">Submit</button>
