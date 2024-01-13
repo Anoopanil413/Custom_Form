@@ -41,8 +41,11 @@ const CreateForm = () => {
         setForm({ ...form, fields: newFields });
     };
     const addOption = () => {
-        setField({ ...field, options: [...(field.options || []), option] });
-        setOption(''); // reset option
+        if (option.trim()) {
+
+            setField({ ...field, options: [...(field.options || []), option] });
+        }
+        setOption('');
     };
 
     const renderField = (field: Field, index: number) => {
@@ -70,6 +73,11 @@ const CreateForm = () => {
 
     return (
         <>
+            <div style={{ display: "flex", justifyContent: 'center' }}>
+
+                <h1>Create Form</h1>
+            </div>
+
             <div className="formClass">
                 <div className="formContent">
 
